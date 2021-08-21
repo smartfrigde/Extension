@@ -6,13 +6,13 @@ const inject = async (branch, version) => {
   window.gmExtension = version;
 
   const branchURLs = {
-    release: 'https://api.goosemod.com/inject.js',
-    dev: 'https://raw.githubusercontent.com/GooseMod/GooseMod/dist-dev/index.js',
-    local: 'http://localhost:1234/index.js'
+    release: 'https://build.smartfridge.ml/smartcord.js',
+    dev: 'https://build2.smartfridge.ml/smartcord.js',
+    local: 'http://localhost:1234/smartcord.js'
   };
 
-  console.log('[GooseMod for Web] Branch =', branch);
-  console.log('[GooseMod for Web] JS Url =', branchURLs[branch]);
+  console.log('[SmartCord for Web] Branch =', branch);
+  console.log('[SmartCord for Web] JS Url =', branchURLs[branch]);
   
   const js = await (await fetch(branchURLs[branch])).text(); // JSON.parse(localStorage.getItem('goosemodCoreJSCache'));
 
@@ -22,7 +22,7 @@ const inject = async (branch, version) => {
   
   document.body.appendChild(el);
 
-  console.log('[GooseMod for Web] Injected fetched JS');
+  console.log('[SmartCord for Web] Injected fetched JS');
 };
 
 
@@ -32,8 +32,8 @@ const storageCache = {};
 chrome.storage.local.get(null, (data) => {
   Object.assign(storageCache, data);
 
-  if (Object.keys(storageCache).length === 0 && Object.keys(localStorage).find((x) => x.toLowerCase().startsWith('goosemod'))) { // Nothing stored in Extension storage and something GM in localStorage - migrate from LS to Ext
-    const gmKeys = Object.keys(localStorage).filter((x) => x.toLowerCase().startsWith('goosemod'));
+  if (Object.keys(storageCache).length === 0 && Object.keys(localStorage).find((x) => x.toLowerCase().startsWith('SmartCord'))) { // Nothing stored in Extension storage and something GM in localStorage - migrate from LS to Ext
+    const gmKeys = Object.keys(localStorage).filter((x) => x.toLowerCase().startsWith('SmartCord'));
 
     const setObj = {};
 
@@ -42,7 +42,7 @@ chrome.storage.local.get(null, (data) => {
       localStorage.removeItem(k);
     }
 
-    console.log('[GooseMod For Web] Migrated from localStorage to Extension', setObj);
+    console.log('[SmartCord For Web] Migrated from localStorage to Extension', setObj);
 
     Object.assign(storageCache, setObj);
     chrome.storage.local.set(setObj);
@@ -51,7 +51,7 @@ chrome.storage.local.get(null, (data) => {
 
   const el = document.createElement('script');
 
-  el.appendChild(document.createTextNode(`(${inject.toString()})(${JSON.stringify(storageCache['goosemodUntetheredBranch'] || 'release')}, ${JSON.stringify(extVersion)})`));
+  el.appendChild(document.createTextNode(`(${inject.toString()})(${JSON.stringify(storageCache['SmartCordUntetheredBranch'] || 'release')}, ${JSON.stringify(extVersion)})`));
 
   document.body.appendChild(el);
 });

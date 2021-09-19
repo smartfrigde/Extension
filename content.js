@@ -1,18 +1,18 @@
 const extVersion = chrome.runtime.getManifest().version;
 
 const inject = async (branch, version) => {
-  console.log('[GooseMod for Web] Injecting...');
+  console.log('[Cumcord for Web] Injecting...');
 
   window.gmExtension = version;
 
   const branchURLs = {
-    release: 'https://build.smartfridge.ml/smartcord.js',
-    dev: 'https://build2.smartfridge.ml/smartcord.js',
-    local: 'http://localhost:1234/smartcord.js'
+    release: 'https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js',
+    dev: 'https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js',
+    local: 'https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js'
   };
 
-  console.log('[SmartCord for Web] Branch =', branch);
-  console.log('[SmartCord for Web] JS Url =', branchURLs[branch]);
+  console.log('[Cumcord for Web] Branch =', branch);
+  console.log('[Cumcord for Web] JS Url =', branchURLs[branch]);
   
   const js = await (await fetch(branchURLs[branch])).text(); // JSON.parse(localStorage.getItem('goosemodCoreJSCache'));
 
@@ -22,7 +22,7 @@ const inject = async (branch, version) => {
   
   document.body.appendChild(el);
 
-  console.log('[SmartCord for Web] Injected fetched JS');
+  console.log('[Cumcord for Web] Injected fetched JS');
 };
 
 
@@ -42,7 +42,7 @@ chrome.storage.local.get(null, (data) => {
       localStorage.removeItem(k);
     }
 
-    console.log('[SmartCord For Web] Migrated from localStorage to Extension', setObj);
+    console.log('[Cumcord For Web] Migrated from localStorage to Extension', setObj);
 
     Object.assign(storageCache, setObj);
     chrome.storage.local.set(setObj);
